@@ -5,44 +5,45 @@
 
 
 //Use of default copy constructor = Shallow copy
-// #include<iostream>
-// using namespace std;
+#include<iostream>
+using namespace std;
 
-// class Rectangle
-// {
-// private:
-// int length, width;
-// public:
-//     Rectangle(int len, int w):length(len),width(w){}
-//     void showValues()
-//     {
-//         cout<<"The value of length is "<<this->length<<","<<this->width<<endl;
-//     }
+class Rectangle
+{
+private:
+int length, width;
+public:
+    Rectangle(int len, int w):length(len),width(w){}
+    void showValues()
+    {
+        cout<<"The value of length is "<<this->length<<","<<this->width<<endl;
+    }
 
-//     void ChangeLength(int len)
-//     {
-//         this->length = len;
-//     }
-// };
+    void ChangeLength(int len)
+    {
+        this->length = len;
+    }
+};
 
 
-// int main()
-// {
-//     Rectangle R1(10,5);
-//     Rectangle R2= R1;
+int main()
+{
+    Rectangle R1(10,5);
+    Rectangle R2= R1;
 
-//     R1.showValues();
-//     R2.showValues();
-//     R2.ChangeLength(30);
-//     cout<<"____________________________________"<<endl;
-//     R1.showValues();
-//     R2.showValues();
-// }
+    R1.showValues();
+    R2.showValues();
+    R2.ChangeLength(30);
+    cout<<"____________________________________"<<endl;
+    R1.showValues();
+    R2.showValues();
+}
 
 //Use of custom copy constructor = deep copy
 
 // #include<iostream>
 // using namespace std;
+
 // class Rectangle
 // {
 // private:
@@ -81,53 +82,53 @@
 //     R2.showDisplay();
 // }
 
-#include<iostream>
-using namespace std;
-class Rectangle
-{
-private:
-int *length, width;
-public:
-    Rectangle(int len, int wid)
-    {
-        length = new int;
-        *length = len;
-        width=wid;
-    }
-    Rectangle(const Rectangle &R)
-    {
-       length =new int;
-       *length  = *(R.length);
-       width=R.width;
+// #include<iostream>
+// using namespace std;
+// class Rectangle
+// {
+// private:
+// int *length, width;
+// public:
+//     Rectangle(int len, int wid)
+//     {
+//         length = new int;
+//         *length = len;
+//         width=wid;
+//     }
+//     Rectangle(const Rectangle &R)
+//     {
+//        length =new int;
+//        *length  = *(R.length);
+//        width=R.width;
 
-    }
+//     }
 
-    void showDisplay()
-    {
-        cout<<"The values of rectangle are: "<<*length<<":"<<width<<endl;
-    }
+//     void showDisplay()
+//     {
+//         cout<<"The values of rectangle are: "<<*length<<":"<<width<<endl;
+//     }
 
-    void ChangeLength(int l)
-    {
-        *length = l;        
-    }
-        // Destructor to free dynamically allocated memory
-    ~Rectangle()
-    {
-        delete length;  // Free the dynamically allocated memory
-    }
+//     void ChangeLength(int l)
+//     {
+//         *length = l;        
+//     }
+//         // Destructor to free dynamically allocated memory
+//     ~Rectangle()
+//     {
+//         delete length;  // Free the dynamically allocated memory
+//     }
 
-};
+// };
 
-int main()
-{
-    Rectangle R1(10,5);
-    Rectangle R2 = R1;
+// int main()
+// {
+//     Rectangle R1(10,5);
+//     Rectangle R2 = R1;
 
-    R1.showDisplay();
-    R2.showDisplay();
-    cout<<"________________________________"<<endl;
-    R2.ChangeLength(30);
-    R1.showDisplay();
-    R2.showDisplay();
-}
+//     R1.showDisplay();
+//     R2.showDisplay();
+//     cout<<"________________________________"<<endl;
+//     R2.ChangeLength(30);
+//     R1.showDisplay();
+//     R2.showDisplay();
+// }
