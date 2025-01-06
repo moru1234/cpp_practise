@@ -19,17 +19,21 @@ class Time2
 private:
 	int mins;
 	int hours;
+	int sec;
 public:
 
-	void acceptTime2(int minutes, int Hours)
+	void acceptTime2( int Hours,int minutes,int sec)
 	{
-		this->mins = minutes;
+		
 		this->hours = Hours;
+		this->mins = minutes;
+		this->sec = sec;
+
 	}
 
 	void displayTime()
 	{
-		cout << "This func shows current time is :" << this->hours << ":" << this->mins << endl;
+		cout << "This func shows current time is :" << this->hours << ":" << this->mins <<":" <<this->sec<< endl;
 	}
 
 };
@@ -39,10 +43,6 @@ int main()
 	Time IST;
 	Time2 UTC;
 
-	IST.acceptTime(5, 10);
-	cout << "The time is " <<IST.hour<<":" << IST.min << endl;
-
-	UTC.acceptTime2(13, 10);
+	UTC.acceptTime2(2,9,10);
 	UTC.displayTime();
-
 }
