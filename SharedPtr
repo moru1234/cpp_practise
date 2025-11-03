@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+#include <memory> // For std::shared_ptr
+
+// Project class manages the project name
+class Project {
+    std::string m_name; // Private: project name
+
+public:
+    // Setter for project name (const-ref avoids a copy; effective for larger strings)
+    void setName(const std::string &name) {
+        m_name = name;
+    }
+
+    // Print details to stdout; marked as 'const' as it doesn't modify the instance
+    void showProjectDetails() const {
+        std::cout << "[Project Name]: " << m_name << "
+";
+    }
+};
+
+// Employee class manages a project assignment
+class Employee {
+    std::shared_ptr<Project> m_prj{}; // Shared pointer for optional, reference-counted ownership
+
+public:
+    // Assign project (passing by const-ref, avoiding shared_ptr copy unless needed)
+    void setProject(const std::shared_ptr<Project> &prj) {
+        m_prj = prj;
+    }
+
+    // Getter returns a shared_ptr by value; increases ref count on copy!
+    std::shared_ptr<Project> GetProject() const {
+        return m_prj;
+    }
+};
+
+// Helper function to print employee & project details, plus shared_ptr ref count
+void showInfo(const std::shared_ptr<Employee> &emp) {
+    std::cout << "Employee project Details: " << std::endl;
+    // Defensive: check that a project is set (nullptr check), otherwise no dereference!
+    if (auto prj = emp->GetProject()) {
+        prj->showProjectDetails();
+        std::cout << "The current count of ref count is " 
+                  << prj.use_count() << "
+";
+    } else {
+        std::cout << "No project assigned.
+";
+    }
+}
+
+int main() {
+    std::shared_ptr<Project> prj(new Project{});
+    prj->setName("Video");
+
+    std::shared_ptr<Employee> e1(new Employee{});
+    e1->setProject(prj);
+
+    std::shared_ptr<Employee> e2(new Employee{});
+    e2->setProject(prj);
+
+    std::shared_ptr<Employee> e3(new Employee{});
+    e3->setProject(prj);
+
+    showInfo(e1);
+    showInfo(e2);
+    showInfo(e3);
+
+    // Teaching Notes:
+    // - All employees point to (share-ownership of) a single Project.
+    // - use_count() gives you the total number of std::shared_ptr instances managing the same Project.
+    // - Destructor for Project will run when all shared_ptr's (here: prj, e1, e2, e3's m_prj) go out of scope or are reset.
+    // - Always avoid std::shared_ptr for strict ownership—use std::unique_ptr instead!
+    // - In production, consider std::weak_ptr to handle cyclic references (here, safe as no cyclical Employee <-> Project reference).
+}
